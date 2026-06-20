@@ -1,4 +1,4 @@
-# Setup and Run on a New Windows PC
+# Setup and Run on a New Windows PC test
 
 This guide gives exact steps for both modes:
 - install/run **without .bat files** (manual)
