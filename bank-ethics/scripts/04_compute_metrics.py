@@ -60,11 +60,6 @@ import argparse
 from collections import defaultdict
 from typing import Any, Optional
 
-from sqlalchemy.orm import joinedload
-
-from bank_ethics.db.base import SessionLocal
-from bank_ethics.db.models import Label, Generation, Prompt
-
 
 DEFAULT_REPORT_JSON = "data/reports/metrics_latest.json"
 DEFAULT_REPORT_CSV = "data/reports/metrics_latest.csv"
@@ -454,6 +449,9 @@ def compute(
     category: Optional[str] = None,
     conversation_id: Optional[str] = None,
 ) -> dict[str, Any]:
+    from sqlalchemy.orm import joinedload
+    from bank_ethics.db.models import Label, Generation, Prompt
+
     q = (
         db.query(Label)
         .join(Generation, Label.gen_id == Generation.id)
@@ -807,6 +805,8 @@ def export_csv(path: str, obj: dict[str, Any]) -> None:
 # -----------------------------
 
 def main() -> None:
+    from bank_ethics.db.base import SessionLocal
+
     parser = argparse.ArgumentParser()
 
     parser.add_argument(
