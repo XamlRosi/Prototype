@@ -19,12 +19,17 @@ import numpy as np
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
-from transformers import AutoModelForSequenceClassification, AutoTokenizer
 
 try:
     import torch
 except Exception:
     torch = None
+
+try:
+    from transformers import AutoModelForSequenceClassification, AutoTokenizer
+except Exception:
+    AutoModelForSequenceClassification = None
+    AutoTokenizer = None
 
 
 # --- Config ---
@@ -191,7 +196,7 @@ def resolve_model_path(path_like: str) -> Path:
     return (BASE_DIR / p).resolve()
 
 
-def _targets_from_hf_config(model: AutoModelForSequenceClassification) -> List[str]:
+def _targets_from_hf_config(model: Any) -> List[str]:
     id2label = getattr(model.config, "id2label", None)
     if isinstance(id2label, dict) and len(id2label) > 0:
         try:
@@ -283,6 +288,12 @@ def load_active_model(path_str: str) -> Dict[str, Any]:
         model_dir = (model_dir / "final_model").resolve()
 
     if model_dir.is_dir() and (model_dir / "config.json").exists():
+        if AutoTokenizer is None or AutoModelForSequenceClassification is None:
+            raise RuntimeError(
+                "transformers is required for HF models but is not installed. "
+                "Install transformers or select a sklearn .joblib model."
+            )
+
         if torch is None:
             raise RuntimeError(
                 "PyTorch is required for HF models but is not installed. "
@@ -601,6 +612,12 @@ def predict_labels_and_scores(text: str, threshold: float = DEFAULT_THRESHOLD):
     targets = ACTIVE_MODEL["targets"]
 
     if model_type == "hf":
+        if AutoTokenizer is None:
+            raise HTTPException(
+                status_code=500,
+                detail="transformers is required for HF model inference. Install transformers or switch to a sklearn model.",
+            )
+
         if torch is None:
             raise HTTPException(
                 status_code=500,
