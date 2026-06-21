@@ -24,6 +24,19 @@ if not exist "node_modules" (
   exit /b 1
 )
 
+if not exist "package.json" (
+  echo [ERROR] Missing package.json in project root. Frontend cannot start.
+  pause
+  exit /b 1
+)
+
+if not exist "index.html" (
+  echo [ERROR] Missing index.html in project root. Vite needs this entry file.
+  echo Copy index.html from the original project and try again.
+  pause
+  exit /b 1
+)
+
 where npm >nul 2>nul
 if errorlevel 1 (
   echo [ERROR] npm is not available in PATH. Install Node.js LTS.
@@ -31,8 +44,8 @@ if errorlevel 1 (
   exit /b 1
 )
 
-if not exist "data\models\tfidf_ovr_logreg_7labels.joblib" (
-  echo [WARNING] Default model not found: data\models\tfidf_ovr_logreg_7labels.joblib
+if not exist "data\models\m1_tfidf_logreg\m1_tfidf_logreg.joblib" (
+  echo [WARNING] Default model not found: data\models\m1_tfidf_logreg\m1_tfidf_logreg.joblib
   echo The UI will start, but predictions may fail until you select/copy a model.
   echo.
 )

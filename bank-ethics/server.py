@@ -34,7 +34,29 @@ except Exception:
 
 # --- Config ---
 BASE_DIR = Path(__file__).parent.resolve()
-MODEL_PATH = os.getenv("MODEL_PATH", str((BASE_DIR / "data/models/tfidf_ovr_logreg_7labels.joblib").as_posix()))
+MODEL_PATH = os.getenv("MODEL_PATH", str((BASE_DIR / "data/models/m1_tfidf_logreg/m1_tfidf_logreg.joblib").as_posix()))
+
+
+def resolve_cors_origins() -> List[str]:
+    """
+    Resolve allowed CORS origins.
+
+    You can override with env var CORS_ORIGINS as comma-separated values,
+    e.g. "http://localhost:5173,http://127.0.0.1:5173".
+    """
+    raw = os.getenv("CORS_ORIGINS", "").strip()
+    if raw:
+        return [x.strip() for x in raw.split(",") if x.strip()]
+
+    # Safe defaults for local Vite dev and preview.
+    return [
+        "http://localhost:5173",
+        "http://127.0.0.1:5173",
+        "http://localhost:5174",
+        "http://127.0.0.1:5174",
+        "http://localhost:4173",
+        "http://127.0.0.1:4173",
+    ]
 
 TARGETS = [
     "unsafe",
@@ -487,8 +509,9 @@ app = FastAPI(title="Responsible AI Evaluator API", version="0.1")
 # CORS: ако React върви на друг порт (например 5173), това е нужно
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],   # за dev; за production сложи конкретен origin
-    allow_credentials=True,
+    allow_origins=resolve_cors_origins(),
+    # Keep credentials disabled in this prototype; this avoids wildcard/credential CORS conflicts.
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
