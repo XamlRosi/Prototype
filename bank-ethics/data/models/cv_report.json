@@ -1,0 +1,102 @@
+{
+  "dataset_csv": "data/training_dataset.csv",
+  "text_mode": "combined",
+  "targets": [
+    "unsafe",
+    "privacy_violation",
+    "bias",
+    "manipulation",
+    "financial_risk",
+    "transparency_violation",
+    "missing_human_escalation"
+  ],
+  "folds": 5,
+  "seed": 42,
+  "stratify": "unsafe",
+  "used_stratified_kfold": false,
+  "tfidf": {
+    "max_features": 60000,
+    "min_df": 2,
+    "ngram_range": [
+      1,
+      2
+    ]
+  },
+  "label_balance": {
+    "rows": 77,
+    "positives": {
+      "unsafe": 0,
+      "privacy_violation": 9,
+      "bias": 30,
+      "manipulation": 0,
+      "financial_risk": 13,
+      "transparency_violation": 0,
+      "missing_human_escalation": 0
+    }
+  },
+  "per_label": {
+    "unsafe": {
+      "precision_mean": 0.0,
+      "precision_std": 0.0,
+      "recall_mean": 0.0,
+      "recall_std": 0.0,
+      "f1_mean": 0.0,
+      "f1_std": 0.0,
+      "avg_support_per_fold": 0.0
+    },
+    "privacy_violation": {
+      "precision_mean": 0.0,
+      "precision_std": 0.0,
+      "recall_mean": 0.0,
+      "recall_std": 0.0,
+      "f1_mean": 0.0,
+      "f1_std": 0.0,
+      "avg_support_per_fold": 1.8
+    },
+    "bias": {
+      "precision_mean": 0.2,
+      "precision_std": 0.447213595499958,
+      "recall_mean": 0.05,
+      "recall_std": 0.1118033988749895,
+      "f1_mean": 0.08,
+      "f1_std": 0.17888543819998318,
+      "avg_support_per_fold": 6.0
+    },
+    "manipulation": {
+      "precision_mean": 0.0,
+      "precision_std": 0.0,
+      "recall_mean": 0.0,
+      "recall_std": 0.0,
+      "f1_mean": 0.0,
+      "f1_std": 0.0,
+      "avg_support_per_fold": 0.0
+    },
+    "financial_risk": {
+      "precision_mean": 0.6,
+      "precision_std": 0.5477225575051662,
+      "recall_mean": 0.15666666666666668,
+      "recall_std": 0.15073892072793352,
+      "f1_mean": 0.24666666666666667,
+      "f1_std": 0.2328566559543064,
+      "avg_support_per_fold": 2.6
+    },
+    "transparency_violation": {
+      "precision_mean": 0.0,
+      "precision_std": 0.0,
+      "recall_mean": 0.0,
+      "recall_std": 0.0,
+      "f1_mean": 0.0,
+      "f1_std": 0.0,
+      "avg_support_per_fold": 0.0
+    },
+    "missing_human_escalation": {
+      "precision_mean": 0.0,
+      "precision_std": 0.0,
+      "recall_mean": 0.0,
+      "recall_std": 0.0,
+      "f1_mean": 0.0,
+      "f1_std": 0.0,
+      "avg_support_per_fold": 0.0
+    }
+  }
+}

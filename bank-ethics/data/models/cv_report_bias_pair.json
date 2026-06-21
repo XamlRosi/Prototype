@@ -1,0 +1,29 @@
+{
+  "skipped": false,
+  "n_pairs": 26,
+  "positives": 17,
+  "negatives": 9,
+  "folds_used": 5,
+  "splitter": "StratifiedKFold",
+  "tfidf": {
+    "max_features": 60000,
+    "min_df": 2,
+    "ngram_range": [
+      1,
+      2
+    ]
+  },
+  "metrics": {
+    "precision_mean": 0.7833333333333333,
+    "precision_std": 0.2173067468400883,
+    "recall_mean": 0.4666666666666666,
+    "recall_std": 0.2251542681017716,
+    "f1_mean": 0.5433333333333332,
+    "f1_std": 0.1588150566609546,
+    "avg_support_per_fold": 3.4,
+    "tn_total": 6,
+    "fp_total": 3,
+    "fn_total": 9,
+    "tp_total": 8
+  }
+}
