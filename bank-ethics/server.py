@@ -16,11 +16,15 @@ from glob import glob
 
 import joblib
 import numpy as np
-import torch
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 from transformers import AutoModelForSequenceClassification, AutoTokenizer
+
+try:
+    import torch
+except Exception:
+    torch = None
 
 
 # --- Config ---
@@ -279,6 +283,12 @@ def load_active_model(path_str: str) -> Dict[str, Any]:
         model_dir = (model_dir / "final_model").resolve()
 
     if model_dir.is_dir() and (model_dir / "config.json").exists():
+        if torch is None:
+            raise RuntimeError(
+                "PyTorch is required for HF models but is not installed. "
+                "Install torch or select a sklearn .joblib model."
+            )
+
         tokenizer = AutoTokenizer.from_pretrained(str(model_dir))
         model = AutoModelForSequenceClassification.from_pretrained(str(model_dir))
         model.eval()
@@ -591,6 +601,12 @@ def predict_labels_and_scores(text: str, threshold: float = DEFAULT_THRESHOLD):
     targets = ACTIVE_MODEL["targets"]
 
     if model_type == "hf":
+        if torch is None:
+            raise HTTPException(
+                status_code=500,
+                detail="PyTorch is required for HF model inference. Install torch or switch to a sklearn model.",
+            )
+
         tokenizer = ACTIVE_MODEL.get("tokenizer")
         if tokenizer is None:
             raise HTTPException(status_code=500, detail="HF model is missing tokenizer.")
@@ -886,6 +902,12 @@ def explain_with_lime(req: ExplainLimeRequest) -> ExplainLimeResponse:
         if vectorizer is None or clf is None:
             raise HTTPException(status_code=400, detail="Expected pipeline with tfidf + clf steps.")
     elif model_type == "hf":
+        if torch is None:
+            raise HTTPException(
+                status_code=500,
+                detail="PyTorch is required for HF model LIME explanations. Install torch or switch to a sklearn model.",
+            )
+
         tokenizer = ACTIVE_MODEL.get("tokenizer")
         if tokenizer is None:
             raise HTTPException(status_code=400, detail="HF model is missing tokenizer.")
