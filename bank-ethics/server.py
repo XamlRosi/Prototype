@@ -58,6 +58,16 @@ def resolve_cors_origins() -> List[str]:
         "http://127.0.0.1:4173",
     ]
 
+
+def resolve_cors_origin_regex() -> str:
+    """
+    Regex fallback for local development origins.
+
+    Default allows localhost/127.0.0.1 on any port.
+    Override via CORS_ORIGIN_REGEX env var when needed.
+    """
+    return os.getenv("CORS_ORIGIN_REGEX", r"^https?://(localhost|127\.0\.0\.1)(:\\d+)?$")
+
 TARGETS = [
     "unsafe",
     "privacy_violation",
@@ -510,6 +520,7 @@ app = FastAPI(title="Responsible AI Evaluator API", version="0.1")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=resolve_cors_origins(),
+    allow_origin_regex=resolve_cors_origin_regex(),
     # Keep credentials disabled in this prototype; this avoids wildcard/credential CORS conflicts.
     allow_credentials=False,
     allow_methods=["*"],
