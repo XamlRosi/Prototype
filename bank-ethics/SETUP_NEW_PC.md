@@ -1,4 +1,4 @@
-# Setup and Run on a New Windows PC test
+# Setup and Run on a New Windows PC
 
 This guide gives exact steps for both modes:
 - install/run **without .bat files** (manual)
@@ -7,6 +7,31 @@ This guide gives exact steps for both modes:
 It also covers:
 - run **without training**
 - run **with training**
+
+---
+
+## 0) What to copy to the new PC
+
+### Minimum copy for app run (no training)
+
+Copy these:
+- whole `src/` folder
+- whole `scripts/` folder
+- whole `data/models/` folder (at least one trained model)
+- `server.py`
+- `requirements.txt`
+- `package.json`
+- `package-lock.json` (if present)
+- `vite.config.js`
+- `.env` (optional)
+
+### Additional copy required for training
+
+Also copy these:
+- whole `prompts/` folder (**required**)
+- whole `data/` folder (DB/CSVs used by pipeline)
+
+Why: training scripts `02_simulate_bot.py` and `03_judge_labels.py` read system/judge prompt templates from `prompts/`.
 
 ---
 
@@ -62,6 +87,8 @@ This script:
 
 Use this mode if you already have a trained model in `data/models/`.
 
+`prompts/` folder is **not required** for this mode.
+
 ### 4.1 Manual run
 
 Terminal 1 (backend):
@@ -95,6 +122,8 @@ This starts backend and frontend in separate terminal windows.
 ## 5) Run WITH training
 
 Use this when you want to generate data and train a model on the new machine.
+
+`prompts/` folder is **required** for this mode.
 
 ### Important
 

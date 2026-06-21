@@ -10,12 +10,14 @@ echo.
 
 if not exist ".venv\Scripts\python.exe" (
   echo [ERROR] Missing .venv. Run setup_new_pc.bat first.
+  pause
   exit /b 1
 )
 
 if "%OPENAI_API_KEY%"=="" (
   echo [ERROR] OPENAI_API_KEY is not set.
   echo Set it in your shell or .env before running this script.
+  pause
   exit /b 1
 )
 
@@ -49,9 +51,11 @@ if errorlevel 1 goto error
 
 echo [8/8] Start app...
 call start_no_training.bat
+pause
 exit /b 0
 
 :error
 echo.
 echo [ERROR] Training pipeline failed. Check logs above.
+pause
 exit /b 1
