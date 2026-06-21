@@ -1,0 +1,136 @@
+{
+  "model_id": "M1",
+  "model_name": "TF-IDF + One-vs-Rest Logistic Regression",
+  "dataset_csv": "data/training_dataset.csv",
+  "text_mode": "metadata",
+  "split_type": "GroupShuffleSplit",
+  "test_size": 0.2,
+  "seed": 42,
+  "requested_targets": [
+    "unsafe",
+    "privacy_violation",
+    "bias",
+    "manipulation",
+    "transparency_issue",
+    "honesty_issue",
+    "policy_issue",
+    "accessibility_issue",
+    "missing_human_escalation"
+  ],
+  "active_targets": [
+    "unsafe",
+    "privacy_violation",
+    "bias",
+    "manipulation",
+    "transparency_issue",
+    "honesty_issue",
+    "policy_issue",
+    "accessibility_issue",
+    "missing_human_escalation"
+  ],
+  "skipped_targets": {},
+  "tfidf": {
+    "max_features": 60000,
+    "min_df": 2,
+    "ngram_range": [
+      1,
+      2
+    ]
+  },
+  "metrics": {
+    "macro_f1": 0.5432699143783849,
+    "micro_f1": 0.6357615894039735,
+    "per_label": {
+      "unsafe": {
+        "precision": 0.29411764705882354,
+        "recall": 0.625,
+        "f1": 0.4,
+        "support": 8,
+        "tn": 199,
+        "fp": 12,
+        "fn": 3,
+        "tp": 5
+      },
+      "privacy_violation": {
+        "precision": 0.4838709677419355,
+        "recall": 0.8823529411764706,
+        "f1": 0.625,
+        "support": 17,
+        "tn": 186,
+        "fp": 16,
+        "fn": 2,
+        "tp": 15
+      },
+      "bias": {
+        "precision": 0.4189189189189189,
+        "recall": 0.96875,
+        "f1": 0.5849056603773585,
+        "support": 32,
+        "tn": 144,
+        "fp": 43,
+        "fn": 1,
+        "tp": 31
+      },
+      "manipulation": {
+        "precision": 0.532258064516129,
+        "recall": 0.825,
+        "f1": 0.6470588235294118,
+        "support": 40,
+        "tn": 150,
+        "fp": 29,
+        "fn": 7,
+        "tp": 33
+      },
+      "transparency_issue": {
+        "precision": 0.5476190476190477,
+        "recall": 0.7419354838709677,
+        "f1": 0.6301369863013698,
+        "support": 62,
+        "tn": 119,
+        "fp": 38,
+        "fn": 16,
+        "tp": 46
+      },
+      "honesty_issue": {
+        "precision": 0.6176470588235294,
+        "recall": 0.6774193548387096,
+        "f1": 0.6461538461538462,
+        "support": 31,
+        "tn": 175,
+        "fp": 13,
+        "fn": 10,
+        "tp": 21
+      },
+      "policy_issue": {
+        "precision": 0.5625,
+        "recall": 0.7758620689655172,
+        "f1": 0.6521739130434783,
+        "support": 58,
+        "tn": 126,
+        "fp": 35,
+        "fn": 13,
+        "tp": 45
+      },
+      "accessibility_issue": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 0,
+        "tn": 219,
+        "fp": 0,
+        "fn": 0,
+        "tp": 0
+      },
+      "missing_human_escalation": {
+        "precision": 0.6111111111111112,
+        "recall": 0.8301886792452831,
+        "f1": 0.704,
+        "support": 53,
+        "tn": 138,
+        "fp": 28,
+        "fn": 9,
+        "tp": 44
+      }
+    }
+  }
+}
